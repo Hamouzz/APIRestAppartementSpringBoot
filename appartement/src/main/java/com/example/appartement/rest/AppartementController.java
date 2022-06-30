@@ -9,8 +9,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,7 +33,6 @@ import com.example.appartement.repository.AppartementRepository;
 @RequestMapping("/api/v1")
 public class AppartementController {
 	
-	private static Logger Logger = LoggerFactory.getLogger(AppartementController.class);
 	
 	
 	@Resource
@@ -43,7 +40,6 @@ public class AppartementController {
 	
 	@GetMapping("/appartements")
 	public List<Appartement> getAllAppartements() {
-		Logger.info("Trouve tout les appartements");
 		return appartementRepository.findAll();
 	}
 	
@@ -53,7 +49,6 @@ public class AppartementController {
 		Appartement appartement = appartementRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Appartement non trouvé pour cet id :: " + id));
 		
-		Logger.info("Trouve un Appartement avec pour id : {}", id);
 		return ResponseEntity.ok().body(appartement);
 	}
 	
@@ -62,7 +57,6 @@ public class AppartementController {
 		
 		Appartement newAppartement = appartementRepository.save(appartement);
 		
-		Logger.info("Creer un appartement avec pour id : {}", newAppartement.getId());
 		return new ResponseEntity<>(newAppartement, HttpStatus.CREATED);
 	}
 	
@@ -80,7 +74,6 @@ public class AppartementController {
 		
 		Appartement updatedAppartement = appartementRepository.save(appartementData);
 		
-		Logger.info("Appartement update avec pour id : {}", id);
 		return new ResponseEntity<>(updatedAppartement, HttpStatus.OK);
 	}
 	
@@ -92,7 +85,6 @@ public class AppartementController {
 		
 		appartementRepository.delete(appartement);
 		
-		Logger.info("Supprime l'Appartement avec pour id : {}", id);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("L'appartement a été supprimé !", Boolean.TRUE);
 		
